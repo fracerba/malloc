@@ -1,8 +1,22 @@
 #include "malloc.h"
 
-void	*realloc(void *ptr, size_t size)
+void *realloc(void *ptr, size_t size)
 {
-    void	*new_ptr;
+    if (!ptr)
+        return malloc(size);
 
-    return (new_ptr);
+    t_mem_block *block = (t_mem_block *)((char *)ptr - sizeof(t_mem_block));
+    if (block->size >= size)
+    {
+        split_block(block, size);
+        return ptr;
+    }
+
+    void *new_ptr = malloc(size);
+    if (new_ptr)
+    {
+        memcpy(new_ptr, ptr, block->size);
+        free(ptr);
+    }
+    return new_ptr;
 }

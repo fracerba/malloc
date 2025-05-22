@@ -12,7 +12,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
 # File sorgenti e oggetti
-SRCS = malloc.c free.c realloc.c show_alloc_mem.c
+SRCS = malloc.c free.c realloc.c show_alloc_mem.c utils.c
 OBJS = $(SRCS:.c=.o)
 
 # Regola principale
