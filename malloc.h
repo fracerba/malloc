@@ -30,7 +30,7 @@ typedef struct s_mem_zone
 	void			*start;		// Indirizzo di inizio della zona
 	size_t			size;		// Dimensione totale della zona
 	t_mem_block		*blocks;	// Lista dei blocchi nella zona
-	struct s_zone	*next;		// Puntatore alla zona successiva
+	struct s_mem_zone	*next;		// Puntatore alla zona successiva
 } t_mem_zone;
 
 typedef struct s_mem_manager
@@ -41,7 +41,7 @@ typedef struct s_mem_manager
 } t_mem_manager;
 
 // Variabile globale unica
-t_mem_manager g_mem_manager = {NULL, NULL, NULL};
+extern t_mem_manager g_mem_manager;
 
 size_t		get_page_size(void);
 t_mem_zone	*create_zone(size_t block_size, size_t num_blocks);

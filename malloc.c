@@ -1,5 +1,7 @@
 #include "malloc.h"
 
+t_mem_manager g_mem_manager = {NULL, NULL, NULL};
+
 void *malloc(size_t size)
 {
 	if (size == 0)
