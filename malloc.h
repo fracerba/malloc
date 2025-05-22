@@ -20,24 +20,24 @@
 
 typedef struct s_mem_block
 {
-    size_t          size;       // Dimensione del blocco
-    int             is_free;    // 1 se il blocco è libero, 0 se è occupato
-    struct s_mem_block  *next;      // Puntatore al blocco successivo
+	size_t				size;		// Dimensione del blocco
+	int					is_free;	// 1 se il blocco è libero, 0 se è occupato
+	struct s_mem_block	*next;		// Puntatore al blocco successivo
 } t_mem_block;
 
 typedef struct s_mem_zone
 {
-    void            *start;     // Indirizzo di inizio della zona
-    size_t          size;       // Dimensione totale della zona
-    t_mem_block         *blocks;    // Lista dei blocchi nella zona
-    struct s_zone   *next;      // Puntatore alla zona successiva
+	void			*start;		// Indirizzo di inizio della zona
+	size_t			size;		// Dimensione totale della zona
+	t_mem_block		*blocks;	// Lista dei blocchi nella zona
+	struct s_zone	*next;		// Puntatore alla zona successiva
 } t_mem_zone;
 
 typedef struct s_mem_manager
 {
-    t_mem_zone *tiny;   // Zone per allocazioni "TINY"
-    t_mem_zone *small;  // Zone per allocazioni "SMALL"
-    t_mem_zone *large;  // Zone per allocazioni "LARGE"
+	t_mem_zone	*tiny;	// Zone per allocazioni "TINY"
+	t_mem_zone	*small;	// Zone per allocazioni "SMALL"
+	t_mem_zone	*large;	// Zone per allocazioni "LARGE"
 } t_mem_manager;
 
 // Variabile globale unica
@@ -46,11 +46,11 @@ t_mem_manager g_mem_manager = {NULL, NULL, NULL};
 size_t		get_page_size(void);
 t_mem_zone	*create_zone(size_t block_size, size_t num_blocks);
 t_mem_block	*find_free_block(t_mem_zone *zone, size_t size);
-void 		split_block(t_mem_block *block, size_t size);
+void		split_block(t_mem_block *block, size_t size);
 
-void    	free(void *ptr);
-void    	*malloc(size_t size);
-void    	*realloc(void *ptr, size_t size);
-void    	show_alloc_mem(void);
+void		free(void *ptr);
+void		*malloc(size_t size);
+void		*realloc(void *ptr, size_t size);
+void		show_alloc_mem(void);
 
 #endif

@@ -1,6 +1,6 @@
 # Variabile HOSTTYPE
 ifeq ($(HOSTTYPE),)
-    HOSTTYPE := $(shell uname -m)_$(shell uname -s)
+	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
 
 # Nome dell'eseguibile
@@ -20,29 +20,29 @@ all: libft $(NAME) symlink
 
 # Creazione dell'eseguibile
 $(NAME): $(OBJS)
-    $(CC) $(CFLAGS) -shared -o $(NAME) $(OBJS)
+	$(CC) $(CFLAGS) -shared -o $(NAME) $(OBJS)
 
 # Creazione del collegamento simbolico
 symlink:
-    ln -sf $(NAME) $(LINK_NAME)
+	ln -sf $(NAME) $(LINK_NAME)
 
 # Compilazione della libreria libft
 libft:
-    $(MAKE) -C libft
+	$(MAKE) -C libft
 
 # Regola per compilare i file .o
 %.o: %.c
-    $(CC) $(CFLAGS) -fPIC -c $< -o $@
+	$(CC) $(CFLAGS) -fPIC -c $< -o $@
 
 # Pulizia dei file oggetto
 clean:
-    rm -f $(OBJS)
-    $(MAKE) -C libft clean
+	rm -f $(OBJS)
+	$(MAKE) -C libft clean
 
 # Pulizia completa
 fclean: clean
-    rm -f $(NAME) $(LINK_NAME)
-    $(MAKE) -C libft fclean
+	rm -f $(NAME) $(LINK_NAME)
+	$(MAKE) -C libft fclean
 
 # Ricompilazione completa
 re: fclean all

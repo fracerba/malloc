@@ -2,21 +2,21 @@
 
 void *realloc(void *ptr, size_t size)
 {
-    if (!ptr)
-        return malloc(size);
+	if (!ptr)
+		return malloc(size);
 
-    t_mem_block *block = (t_mem_block *)((char *)ptr - sizeof(t_mem_block));
-    if (block->size >= size)
-    {
-        split_block(block, size);
-        return ptr;
-    }
+	t_mem_block *block = (t_mem_block *)((char *)ptr - sizeof(t_mem_block));
+	if (block->size >= size)
+	{
+		split_block(block, size);
+		return ptr;
+	}
 
-    void *new_ptr = malloc(size);
-    if (new_ptr)
-    {
-        memcpy(new_ptr, ptr, block->size);
-        free(ptr);
-    }
-    return new_ptr;
+	void *new_ptr = malloc(size);
+	if (new_ptr)
+	{
+		memcpy(new_ptr, ptr, block->size);
+		free(ptr);
+	}
+	return new_ptr;
 }
