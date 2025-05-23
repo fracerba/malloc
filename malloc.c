@@ -61,7 +61,11 @@ void *malloc(size_t size)
 	}
 
 	// Crea una nuova zona se necessario
-	size_t block_size = (zone_list == &g_mem_manager.tiny) ? TINY_BLOCK_SIZE : SMALL_BLOCK_SIZE;
+	size_t block_size = 0;
+	if (zone_list == &g_mem_manager.tiny)
+		block_size = TINY_BLOCK_SIZE;
+	else 
+		block_size = SMALL_BLOCK_SIZE;
 	zone = create_zone(block_size, 100); // Pre-alloca per 100 blocchi
 	if (!zone)
 		return NULL;

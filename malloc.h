@@ -30,7 +30,7 @@ typedef struct s_mem_zone
 	void			*start;		// Indirizzo di inizio della zona
 	size_t			size;		// Dimensione totale della zona
 	t_mem_block		*blocks;	// Lista dei blocchi nella zona
-	struct s_mem_zone	*next;		// Puntatore alla zona successiva
+	struct s_mem_zone	*next;	// Puntatore alla zona successiva
 } t_mem_zone;
 
 typedef struct s_mem_manager
