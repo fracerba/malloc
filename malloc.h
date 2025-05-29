@@ -9,11 +9,11 @@
 # include <sys/resource.h>
 # include "libft/libft.h"
 
-#define TINY_MAX 64
-#define SMALL_MAX 512
-#define TINY_ZONE_SIZE 4096
-#define SMALL_ZONE_SIZE 8192
-#define LARGE_ZONE_SIZE 16384
+#define TINY_MAX (size_t)(getpagesize() * 16)		// 64 KB
+#define SMALL_MAX (size_t)(getpagesize() * 256)		// 1 MB
+#define TINY_ZONE_SIZE (size_t)(TINY_MAX * 100) 	// 6400 KB
+#define SMALL_ZONE_SIZE (size_t)(SMALL_MAX * 100)	// 100 MB
+#define LARGE_ZONE_SIZE (size_t)(SMALL_MAX * 400)	// 400 MB
 #define TINY_BLOCK_SIZE (sizeof(t_mem_block) + TINY_MAX)
 #define SMALL_BLOCK_SIZE (sizeof(t_mem_block) + SMALL_MAX)
 #define LARGE_BLOCK_SIZE (sizeof(t_mem_block) + LARGE_ZONE_SIZE)
