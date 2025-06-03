@@ -6,6 +6,7 @@ endif
 # Nome dell'eseguibile
 NAME = libft_malloc_$(HOSTTYPE).so
 LINK_NAME = libft_malloc.so
+LIBFT = libft/libft.a
 
 # Compilatore e flag
 CC = gcc
@@ -20,7 +21,7 @@ all: libft $(NAME) symlink
 
 # Creazione dell'eseguibile
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -shared -o $(NAME) $(OBJS)
+	$(CC) $(CFLAGS) -shared -o $(NAME) $(OBJS) $(LIBFT)
 
 # Creazione del collegamento simbolico
 symlink:

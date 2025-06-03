@@ -1,0 +1,20 @@
+# Oggetti compilati
+*.o
+
+# Librerie e binari generati
+*.so
+libft/libft.a
+
+# File di test
+test*.c
+test*
+
+# File di backup/editor
+*~
+*.swp
+*.swo
+.DS_Store
+
+# Output di build
+/build/
+obj/
