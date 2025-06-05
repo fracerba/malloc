@@ -20,27 +20,33 @@ void *malloc(size_t size)
 		zone_list = &g_mem_manager.small;
 	else
 	{
-		size_t total_size = size + sizeof(t_mem_block);
-		t_mem_block *block = mmap(NULL, total_size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
-		if (block == MAP_FAILED)
+		// Alloca una zona per ogni LARGE
+		size_t total_size = sizeof(t_mem_zone) + sizeof(t_mem_block) + size;
+		t_mem_zone *zone = mmap(NULL, total_size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+		if (zone == MAP_FAILED)
 			return NULL;
 
+		zone->start = (void *)zone + sizeof(t_mem_zone);
+		zone->size = size;
+		zone->nbr_alloc = 1;
+		zone->next = NULL;
+
+		// Alloca il blocco all'interno della zona
+		t_mem_block *block = (t_mem_block *)zone->start;
 		block->size = size;
 		block->is_free = 0;
 		block->next = NULL;
+		zone->blocks = block;
 
-		// Aggiungi il blocco alla lista "LARGE"
+		// Inserisci la nuova zona nella lista large
 		if (!g_mem_manager.large)
-		{
-			g_mem_manager.large = (t_mem_zone *)block;
-			g_mem_manager.large->blocks = block;
-		}
+			g_mem_manager.large = zone;
 		else
 		{
-			t_mem_zone *zone = g_mem_manager.large;
-			while (zone->next)
-				zone = zone->next;
-			zone->next = (t_mem_zone *)block;
+			t_mem_zone *last = g_mem_manager.large;
+			while (last->next)
+				last = last->next;
+			last->next = zone;
 		}
 
 		return (void *)((char *)block + sizeof(t_mem_block));
