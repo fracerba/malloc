@@ -23,6 +23,7 @@ typedef struct s_mem_block
 	size_t				size;		// Dimensione del blocco
 	int					is_free;	// 1 se il blocco è libero, 0 se è occupato
 	struct s_mem_block	*next;		// Puntatore al blocco successivo
+	void				*original;	// Puntatore all'indirizzo originale del blocco
 } t_mem_block;
 
 typedef struct s_mem_zone
@@ -48,6 +49,7 @@ size_t		get_page_size(void);
 t_mem_zone	*create_zone(size_t block_size, size_t num_blocks);
 t_mem_block	*find_free_block(t_mem_zone *zone, size_t size);
 void		split_block(t_mem_block *block, size_t size);
+void		remove_zone_from_list(t_mem_zone **head, t_mem_zone *to_remove);
 
 void		free(void *ptr);
 void		*malloc(size_t size);

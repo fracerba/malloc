@@ -4,7 +4,7 @@ char *convert_to_hex(void *ptr)
 {
     unsigned long long	value = (unsigned long long)ptr;
     char				hex_digits[] = "0123456789ABCDEF";
-    char				buffer[2 + sizeof(void *) * 2 + 1]; // "0x" + max hex digits + '\0'
+    char				buffer[2 + sizeof(void *) * 2 + 1];
     int					i = 0;
 
     buffer[0] = '0';

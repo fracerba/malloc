@@ -50,3 +50,26 @@ void split_block(t_mem_block *block, size_t size)
 		block->next = new_block;
 	}
 }
+
+void remove_zone_from_list(t_mem_zone **head, t_mem_zone *to_remove)
+{
+    if (!head || !*head || !to_remove)
+        return;
+    if (*head == to_remove)
+    {
+        *head = to_remove->next;
+        return;
+    }
+    t_mem_zone *prev = *head;
+    t_mem_zone *curr = (*head)->next;
+    while (curr)
+    {
+        if (curr == to_remove)
+        {
+            prev->next = curr->next;
+            return;
+        }
+        prev = curr;
+        curr = curr->next;
+    }
+}

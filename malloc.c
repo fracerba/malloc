@@ -36,6 +36,7 @@ void *malloc(size_t size)
 		block->size = size;
 		block->is_free = 0;
 		block->next = NULL;
+		block->original = zone->start; // Puntatore all'indirizzo originale del blocco
 		zone->blocks = block;
 
 		// Inserisci la nuova zona nella lista large
@@ -61,6 +62,7 @@ void *malloc(size_t size)
 		{
 			block->is_free = 0;
 			split_block(block, size);
+			zone->nbr_alloc++;
 			return (void *)((char *)block + sizeof(t_mem_block));
 		}
 		zone = zone->next;
@@ -72,10 +74,10 @@ void *malloc(size_t size)
 		block_size = TINY_BLOCK_SIZE;
 	else 
 		block_size = SMALL_BLOCK_SIZE;
+
 	zone = create_zone(block_size, 100); // Pre-alloca per 100 blocchi
 	if (!zone)
 		return NULL;
-
 	zone->next = *zone_list;
 	*zone_list = zone;
 
@@ -84,7 +86,8 @@ void *malloc(size_t size)
 	block->size = zone->size - sizeof(t_mem_block);
 	block->is_free = 0;
 	block->next = NULL;
-
+	block->original = zone->start; // Puntatore all'indirizzo originale del blocco
+	zone->nbr_alloc = 1;
 	zone->blocks = block;
 	split_block(block, size);
 
