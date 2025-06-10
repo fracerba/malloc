@@ -2,38 +2,48 @@
 
 int all_blocks_free(t_mem_zone *zone)
 {
-    t_mem_block *block = zone->blocks;
-    while (block)
-    {
-        if (!block->is_free)
-            return 0;
-        block = block->next;
-    }
-    return 1;
+	t_mem_block *block = zone->blocks;
+	while (block)
+	{
+		if (!block->is_free)
+			return 0;
+		block = block->next;
+	}
+	return 1;
 }
 
 t_mem_zone *find_zone(t_mem_block *block)
 {
 	t_mem_zone *zone = NULL;
 	t_mem_zone *zone_lists[] = {g_mem_manager.tiny, g_mem_manager.small, g_mem_manager.large};
-    for (int i = 0; i < 3; i++)
-    {
-        t_mem_zone *z = zone_lists[i];
-        while (z)
-        {
-            // Il blocco appartiene a questa zona se il suo indirizzo è compreso tra start e start+size
-            if ((void *)block >= z->start && (void *)block < (z->start + z->size))
-            {
-                zone = z;
-                break;
-            }
-            z = z->next;
-        }
-        if (zone)
-            break;
-    }
-    if (!zone)
-        return NULL;
+	for (int i = 0; i < 3; i++)
+	{
+		t_mem_zone *z = zone_lists[i];
+		while (z)
+		{
+			// Il blocco appartiene a questa zona se il suo indirizzo è compreso tra start e start+size
+			if ((void *)block >= z->start && (void *)block < (z->start + z->size))
+			{
+				zone = z;
+				break;
+			}
+			z = z->next;
+		}
+		if (zone)
+			break;
+	}
+	if (!zone)
+		return NULL;
+
+	// Verifica che il blocco sia effettivamente nella lista dei blocchi della zona
+	t_mem_block *curr = zone->blocks;
+	while (curr)
+	{
+		if (curr == block)
+			return zone;
+		curr = curr->next;
+	}
+	return NULL;
 }
 
 void free(void *ptr)

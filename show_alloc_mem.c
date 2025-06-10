@@ -2,33 +2,33 @@
 
 char *convert_to_hex(void *ptr)
 {
-    unsigned long long	value = (unsigned long long)ptr;
-    char				hex_digits[] = "0123456789ABCDEF";
-    char				buffer[2 + sizeof(void *) * 2 + 1];
-    int					i = 0;
+	unsigned long long	value = (unsigned long long)ptr;
+	char				hex_digits[] = "0123456789ABCDEF";
+	char				buffer[2 + sizeof(void *) * 2 + 1];
+	int					i = 0;
 
-    buffer[0] = '0';
-    buffer[1] = 'x';
-    i = 2;
+	buffer[0] = '0';
+	buffer[1] = 'x';
+	i = 2;
 
-    if (value == 0)
-    {
-        buffer[i++] = '0';
-    }
-    else
-    {
-        char tmp[sizeof(void *) * 2];
-        int j = 0;
-        while (value > 0)
-        {
-            tmp[j++] = hex_digits[value % 16];
-            value = value / 16;
-        }
-        while (j > 0)
-            buffer[i++] = tmp[--j];
-    }
-    buffer[i] = '\0';
-    return ft_strdup(buffer);
+	if (value == 0)
+	{
+		buffer[i++] = '0';
+	}
+	else
+	{
+		char tmp[sizeof(void *) * 2];
+		int j = 0;
+		while (value > 0)
+		{
+			tmp[j++] = hex_digits[value % 16];
+			value = value / 16;
+		}
+		while (j > 0)
+			buffer[i++] = tmp[--j];
+	}
+	buffer[i] = '\0';
+	return ft_strdup(buffer);
 }
 
 void show_alloc_mem(void)
