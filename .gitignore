@@ -8,6 +8,7 @@ libft/libft.a
 # File di test
 test*.c
 test*
+run_linux.sh
 
 # File di backup/editor
 *~

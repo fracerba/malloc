@@ -7,13 +7,8 @@ void *malloc(size_t size)
 	if (size == 0)
 		return NULL;
 
-	// Allinea la dimensione richiesta
-	size_t alignment = sizeof(void *);
-	size = (size + alignment - 1) & ~(alignment - 1);
-
-	t_mem_zone **zone_list = NULL;
-
 	// Determina la zona in base alla dimensione
+	t_mem_zone **zone_list = NULL;
 	if (size <= TINY_MAX)
 		zone_list = &g_mem_manager.tiny;
 	else if (size <= SMALL_MAX)

@@ -29,6 +29,7 @@ typedef struct s_mem_block
 typedef struct s_mem_zone
 {
 	void			*start;		// Indirizzo di inizio della zona
+	size_t			offset;		// Offset per gestire l'allineamento
 	size_t			size;		// Dimensione totale della zona
 	size_t			nbr_alloc;	// Numero di blocchi allocati nella zona
 	t_mem_block		*blocks;	// Lista dei blocchi nella zona
