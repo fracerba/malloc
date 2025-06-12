@@ -58,9 +58,6 @@ void free(void *ptr)
 	if (!zone)
 		return;
 
-	if (zone->nbr_alloc > 0)
-		zone->nbr_alloc--;
-
 	// Coalescing con blocco successivo
 	while (block->next && block->next->is_free)
 	{

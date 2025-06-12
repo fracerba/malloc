@@ -23,7 +23,6 @@ void *malloc(size_t size)
 
 		zone->start = (void *)zone + sizeof(t_mem_zone);
 		zone->size = size;
-		zone->nbr_alloc = 1;
 		zone->next = NULL;
 
 		// Alloca il blocco all'interno della zona
@@ -57,7 +56,6 @@ void *malloc(size_t size)
 		{
 			block->is_free = 0;
 			split_block(block, size);
-			zone->nbr_alloc++;
 			return (void *)((char *)block + sizeof(t_mem_block));
 		}
 		zone = zone->next;
@@ -82,7 +80,6 @@ void *malloc(size_t size)
 	block->is_free = 0;
 	block->next = NULL;
 	block->original = zone->start; // Puntatore all'indirizzo originale del blocco
-	zone->nbr_alloc = 1;
 	zone->blocks = block;
 	split_block(block, size);
 

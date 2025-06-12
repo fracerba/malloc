@@ -19,9 +19,13 @@ void *realloc(void *ptr, size_t size)
 	}
 
 	void *new_ptr = malloc(size);
+	size_t copy_size = 0;
 	if (new_ptr)
 	{
-		size_t copy_size = block->size < size ? block->size : size;
+		if (block->size < size)
+			copy_size = block->size;
+		else
+			copy_size = size;
 		ft_memcpy(new_ptr, ptr, copy_size);
 		free(ptr);
 	}
